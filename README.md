@@ -185,10 +185,12 @@ Decouples components using the Producer-Consumer (Pub-Sub) model:
 2. Pick a **Sharding Key** (e.g., `user_id`).
 3. Use a hash or modulo function to determine which shard receives the data:
 
-$$\text{Shard ID} = \text{user\_id} \pmod 4$$
+`Shard ID = user_id % 4`
 
-- $\text{user\_id} = 101 \implies 101 \pmod 4 = 1 \implies \text{Shard DB 1}$
-- $\text{user\_id} = 102 \implies 102 \pmod 4 = 2 \implies \text{Shard DB 2}$
+- `101 % 4 = 1` → **Shard DB 1**
+- `102 % 4 = 2` → **Shard DB 2**
+- `103 % 4 = 3` → **Shard DB 3**
+- `104 % 4 = 0` → **Shard DB 0**
 
 ### 3. Trade-offs & Complexities Introduced
 - **Cross-Shard Joins:** Joining tables across two separate database servers over the network is extremely slow. We often need to de-normalize data (store duplicate data in tables to avoid joins).
